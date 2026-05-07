@@ -11,6 +11,7 @@ class OfficerUpdateTaskRequest extends FormRequest
     {
         $task = $this->route('task');
         return $this->user()?->role === 'officer'
+            && $task->officer_id === $this->user()->officer_id
             && $task->officer_id === $this->user()->officer_id;
     }
 
@@ -19,6 +20,7 @@ class OfficerUpdateTaskRequest extends FormRequest
         return [
             'amount_done' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string', 'max:1000'],
+            'progress_override' => ['nullable', 'string', 'in:not_started,in_progress,done'],
         ];
     }
 

@@ -90,6 +90,7 @@
 
             @php
                 $dashboardRoute = match(auth()->user()->role) { 'officer' => route('dashboard.officer'), 'lead' => route('dashboard.lead'), default => route('dashboard.ho') };
+                $tasksRoute = match(auth()->user()->role) { 'officer' => route('tasks.my'), 'lead' => route('tasks.team'), default => route('tasks.index') };
             @endphp
 
             <a href="{{ $dashboardRoute }}" x-on:click="activeMenu = 'dashboard'"
@@ -104,7 +105,7 @@
                 <span class="{{ request()->routeIs('dashboard.*') ? 'font-semibold' : '' }}">Dashboard</span>
             </a>
 
-            <a href="{{ route('tasks.index') }}" x-on:click="activeMenu = 'tasks'"
+            <a href="{{ $tasksRoute }}" x-on:click="activeMenu = 'tasks'"
                 class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 relative overflow-hidden
                 {{ request()->routeIs('tasks.*') ? 'bg-[#0857C3]/20 text-white' : 'text-white/60 hover:text-white hover:bg-white/5' }}">
                 @if(request()->routeIs('tasks.*'))
@@ -113,7 +114,11 @@
                 <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('tasks.*') ? 'text-[#71C5E8]' : 'text-white/40 group-hover:text-white/70' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                 </svg>
-                <span class="{{ request()->routeIs('tasks.*') ? 'font-semibold' : '' }}">Task & Category</span>
+                <span class="{{ request()->routeIs('tasks.*') ? 'font-semibold' : '' }}">
+                    @if(auth()->user()->role === 'officer') My Tasks
+                    @elseif(auth()->user()->role === 'lead') Team Tasks
+                    @else Task &amp; Category @endif
+                </span>
             </a>
 
             @if(in_array(auth()->user()->role, ['ho', 'lead']))

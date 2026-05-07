@@ -18,6 +18,11 @@ class Officer extends Model
         return $this->belongsTo(BranchOffice::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

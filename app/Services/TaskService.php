@@ -54,7 +54,7 @@ class TaskService
     public function officerUpdate(Task $task, array $data): void
     {
         abort_unless(
-            auth()->id() === $task->officer?->user?->id,
+            auth()->user()->officer_id === $task->officer_id,
             403,
             'You are not authorized to update this task.'
         );
@@ -64,14 +64,20 @@ class TaskService
             'description' => $data['description'] ?? null,
         ]);
 
-        $task->syncProgressFromAmount();
+        // Manual status override takes priority; otherwise sync from amount
+        if (!empty($data['progress_override'])) {
+            $task->progress = $data['progress_override'];
+        } else {
+            $task->syncProgressFromAmount();
+        }
+
         $task->save();
     }
 
     public function leadFeedback(Task $task, array $data): void
     {
         abort_unless(
-            auth()->id() === $task->teamLead?->user?->id,
+            auth()->user()->team_lead_id === $task->team_lead_id,
             403,
             'You are not authorized to give feedback on this task.'
         );

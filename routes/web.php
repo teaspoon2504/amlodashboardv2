@@ -24,11 +24,13 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:officer')->group(function () {
         Route::patch('tasks/{task}/officer-update', [TaskController::class, 'officerUpdate'])->name('tasks.officer-update');
+        Route::get('tasks/my', [TaskController::class, 'myTasks'])->name('tasks.my');
     });
 
     Route::middleware('role:lead')->group(function () {
         Route::patch('tasks/{task}/lead-feedback', [TaskController::class, 'leadFeedback'])->name('tasks.lead-feedback');
         Route::patch('tasks/{task}/lead-set-target', [TaskController::class, 'leadSetTarget'])->name('tasks.lead-set-target');
+        Route::get('tasks/team', [TaskController::class, 'teamTasks'])->name('tasks.team');
     });
 
     Route::middleware('role:ho')->group(function () {

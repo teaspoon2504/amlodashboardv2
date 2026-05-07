@@ -22,12 +22,34 @@ class TaskController extends Controller
     {
     }
 
+    // ========== OFFICER: View own tasks ==========
+    public function myTasks()
+    {
+        $tasks = Task::with(['taskCategory', 'branchOffice'])
+            ->where('officer_id', auth()->user()->officer_id)
+            ->orderByDesc('id')
+            ->get();
+
+        return view('tasks.my', compact('tasks'));
+    }
+
+    // ========== LEAD: View team tasks ==========
+    public function teamTasks()
+    {
+        $tasks = Task::with(['taskCategory', 'officer', 'branchOffice'])
+            ->where('team_lead_id', auth()->user()->team_lead_id)
+            ->orderByDesc('id')
+            ->get();
+
+        return view('tasks.team', compact('tasks'));
+    }
+
     // ========== OFFICER: Update own task ==========
     public function officerUpdate(OfficerUpdateTaskRequest $request, Task $task)
     {
         $this->taskService->officerUpdate($task, $request->validated());
 
-        return back()->with('success', 'Task updated successfully');
+        return redirect()->route('dashboard.officer')->with('success', 'Task updated successfully');
     }
 
     // ========== LEAD: Give feedback & set targets ==========

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AMLO Activity Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0857C3;
+            --secondary: #71C5E8;
+
+            --text: #0F172A;
+            --muted: #64748B;
+
+            --bg: #FFFFFF;
+            --card: #FFFFFF;
+            --border: #DCE8F7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 18px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 28px;
+
+            padding: 28px 20px;
+
+            box-shadow:
+                0 8px 30px rgba(8, 87, 195, 0.08);
+        }
+
+        .badge {
+            width: max-content;
+
+            margin: 0 auto 28px;
+
+            padding: 10px 18px;
+
+            border-radius: 999px;
+
+            background: rgba(113, 197, 232, 0.12);
+
+            border: 1px solid rgba(8, 87, 195, 0.12);
+
+            color: var(--primary);
+
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+        }
+
+        .title {
+            text-align: center;
+
+            font-size: clamp(2rem, 7vw, 3.2rem);
+
+            line-height: 1.1;
+
+            font-weight: 800;
+
+            color: var(--primary);
+
+            margin-bottom: 14px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 0.95rem;
+
+            line-height: 1.7;
+
+            margin-bottom: 34px;
+        }
+
+        .section-label {
+            text-align: center;
+
+            color: var(--primary);
+
+            font-size: 0.72rem;
+            font-weight: 700;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 18px;
+        }
+
+        .roles {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+
+            margin-bottom: 26px;
+        }
+
+        .role-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+
+            padding: 16px;
+
+            border-radius: 20px;
+
+            border: 1px solid var(--border);
+
+            background: #fff;
+
+            cursor: pointer;
+
+            transition: all .25s ease;
+        }
+
+        .role-card:hover {
+            border-color: var(--secondary);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 24px rgba(113, 197, 232, 0.15);
+        }
+
+        .role-card.active {
+            border: 1.5px solid var(--primary);
+
+            background: rgba(113, 197, 232, 0.08);
+        }
+
+        .icon-box {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 14px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(113, 197, 232, 0.18);
+
+            font-size: 1.35rem;
+        }
+
+        .role-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .role-title {
+            font-size: 1rem;
+            font-weight: 700;
+
+            line-height: 1.35;
+
+            margin-bottom: 4px;
+        }
+
+        .role-desc {
+            font-size: 0.82rem;
+
+            line-height: 1.55;
+
+            color: var(--muted);
+        }
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            background: var(--primary);
+
+            color: #fff;
+
+            border-radius: 18px;
+
+            padding: 16px;
+
+            font-size: 1rem;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: all .25s ease;
+        }
+
+        .login-btn:hover {
+            background: #0649A5;
+
+            transform: translateY(-2px);
+        }
+
+        /* Tablet */
+
+        @media (min-width:768px) {
+
+            body {
+                padding: 32px;
+            }
+
+            .wrapper {
+                max-width: 680px;
+            }
+
+            .card {
+                padding: 48px;
+                border-radius: 34px;
+            }
+
+            .badge {
+                font-size: 13px;
+                padding: 12px 24px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-label {
+                font-size: 0.8rem;
+            }
+
+            .roles {
+                gap: 18px;
+            }
+
+            .role-card {
+                padding: 22px;
+                gap: 20px;
+            }
+
+            .icon-box {
+                width: 66px;
+                height: 66px;
+
+                font-size: 1.7rem;
+            }
+
+            .role-title {
+                font-size: 1.35rem;
+            }
+
+            .role-desc {
+                font-size: 0.98rem;
+            }
+
+            .login-btn {
+                padding: 20px;
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div class="card">
+
+            <div class="badge">
+                🏛 BANK BRI — KANTOR WILAYAH
+            </div>
+
+            <h1 class="title">
+                AMLO Activity Dashboard
+            </h1>
+
+            <p class="subtitle">
+                Sistem Monitoring Aktivitas & Kinerja Harian AMLO
+            </p>
+
+            <div class="section-label">
+                — PILIH AKSES ROLE —
+            </div>
+
+            <div class="roles">
+
+                <div class="role-card active">
+
+                    <div class="icon-box">
+                        🎯
+                    </div>
+
+                    <div class="role-content">
+
+                        <div class="role-title">
+                            AMLO Officer
+                        </div>
+
+                        <div class="role-desc">
+                            Input aktivitas harian, laporan & progress
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="role-card">
+
+                    <div class="icon-box">
+                        📊
+                    </div>
+
+                    <div class="role-content">
+
+                        <div class="role-title">
+                            AMLO Lead / Team Leader
+                        </div>
+
+                        <div class="role-desc">
+                            Monitor tim, assign tugas, beri feedback
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="role-card">
+
+                    <div class="icon-box">
+                        🏢
+                    </div>
+
+                    <div class="role-content">
+
+                        <div class="role-title">
+                            Head Office Assurance
+                        </div>
+
+                        <div class="role-desc">
+                            Overview seluruh wilayah, assessment & audit
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="login-btn">
+                Masuk Dashboard →
+            </button>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
